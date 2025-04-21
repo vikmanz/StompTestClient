@@ -1,0 +1,77 @@
+package com.vikmanz.stomptc.ui.components.message_outcome
+
+import androidx.compose.desktop.ui.tooling.preview.Preview
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Card
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Done
+import androidx.compose.material.icons.filled.Edit
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
+import com.vikmanz.stomptc.model.StompMessageModel
+import com.vikmanz.stomptc.ui.components.common.CustomButton
+import com.vikmanz.stomptc.ui.components.common.CustomIconButton
+
+@Preview
+@Composable
+fun MessageMinItemPreview() {
+    MaterialTheme {
+        MessageMinItem()
+    }
+}
+
+@Composable
+fun MessageMinItem(
+    message: StompMessageModel = StompMessageModel(),
+    onUpdate: (StompMessageModel) -> Unit = {},
+    onSend: () -> Unit = {},
+) {
+    Card(
+            shape = MaterialTheme.shapes.small,
+            border = BorderStroke(
+                    1.dp,
+                    Color.Black
+            ),
+            modifier = Modifier.fillMaxWidth()
+    ) {
+        Row(
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.fillMaxWidth()
+        ) {
+            Text(
+                    message.name,
+                    style = MaterialTheme.typography.subtitle1,
+                    modifier = Modifier.padding(start = 12.dp)
+            )
+
+            Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+                CustomIconButton(
+                        onClick = {
+                            if (message.isMaximize) {
+                                onUpdate(message.copy(isMaximize = false))
+                            } else {
+                                onUpdate(message.copy(isMaximize = true))
+                            }
+                        },
+                        icon = Icons.Default.Edit
+                )
+                CustomButton(
+                        text = "Send",
+                        onClick = onSend,
+                )
+            }
+        }
+
+    }
+}

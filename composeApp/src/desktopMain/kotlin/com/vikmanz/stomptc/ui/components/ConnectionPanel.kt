@@ -1,0 +1,113 @@
+package com.vikmanz.stomptc.ui.components
+
+import com.vikmanz.stomptc.ui.components.headers.HeadersBlock
+import androidx.compose.desktop.ui.tooling.preview.Preview
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.Card
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.OutlinedTextField
+import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import com.vikmanz.stomptc.ui.vm.ConnectionViewModel
+
+@Preview
+@Composable
+fun ConnectionPanelPreview() {
+    MaterialTheme {
+        ConnectionPanel()
+    }
+}
+
+@Composable
+fun ConnectionPanel(
+    connectionViewModel: ConnectionViewModel = ConnectionViewModel(),
+    onSave: () -> Unit = {}
+) {
+    val connectionConfig by connectionViewModel.connectionConfig.collectAsState()
+    val connectionStatus by connectionViewModel.connectionStatus.collectAsState()
+
+    Card(
+            modifier = Modifier.fillMaxWidth()
+    ) {
+        Column(
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+                modifier = Modifier.padding(16.dp)
+        ) {
+
+            Text(
+                    "Connection Settings",
+                    style = MaterialTheme.typography.h6
+            )
+
+            OutlinedTextField(
+                    value = connectionConfig.endpoint,
+                    onValueChange = { connectionViewModel.updateEndpoint(it) },
+                    label = { Text("WebSocket Endpoint") },
+                    modifier = Modifier.fillMaxWidth()
+            )
+
+
+            HeadersBlock(
+                    headers = connectionConfig.headers,
+                    onAdd = { connectionViewModel.addHeader(it) },
+                    onRemove = { connectionViewModel.removeHeader(it) },
+            )
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            Row(
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    modifier = Modifier.fillMaxWidth()
+            ) {
+                Row(
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    Button(
+                            onClick = { connectionViewModel.loadFromStorage() }
+                    ) {
+                        Text("Load")
+                    }
+
+                    Button(
+                            onClick = onSave
+                    ) {
+                        Text("Save")
+                    }
+                }
+
+                Text(
+                        connectionStatus,
+                        modifier = Modifier.align(Alignment.CenterVertically)
+                )
+
+                Button(
+                        onClick = {
+                            if (connectionStatus == "Connected") {
+                                connectionViewModel.disconnect()
+                            } else {
+                                connectionViewModel.connect()
+                            }
+                        },
+                        colors = ButtonDefaults.buttonColors(
+                                backgroundColor = if (connectionStatus == "Connected") MaterialTheme.colors.error else MaterialTheme.colors.primary
+                        )
+                ) {
+                    Text(if (connectionStatus == "Connected") "Disconnect" else "Connect")
+                }
+            }
+        }
+    }
+}
