@@ -19,6 +19,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.vikmanz.stomptc.model.SendModel
 import com.vikmanz.stomptc.ui.vm.MessagesViewModel
 
 @Preview
@@ -33,14 +34,9 @@ fun MessagesPanelPreview() {
 fun MessagesSendPanel(
     messagesViewModel: MessagesViewModel = MessagesViewModel(),
 
-) {
+        ) {
 
-    val messages = messagesViewModel.outcomeMessages.collectAsStateWithLifecycle()
-    println(messages.value)
-//    listOf(
-//            StompMessageModel("aaa", "bbb", emptyList()),
-//            StompMessageModel("sss", "www", listOf(HeaderModel("hhh", "vvv")))
-//    )
+    val sendMessages = messagesViewModel.outcomeMessages.collectAsStateWithLifecycle()
 
     Card(
             modifier = Modifier.fillMaxSize()
@@ -49,7 +45,7 @@ fun MessagesSendPanel(
                 modifier = Modifier.padding(16.dp)
         ) {
 
-            if (messages.value.isEmpty()) {
+            if (sendMessages.value.isEmpty()) {
                 Text(
                         "No messages configured",
                         modifier = Modifier
@@ -59,10 +55,12 @@ fun MessagesSendPanel(
             } else {
                 Column(
                         verticalArrangement = Arrangement.spacedBy(8.dp),
-                        modifier = Modifier.wrapContentHeight().padding(4.dp)
+                        modifier = Modifier
+                            .wrapContentHeight()
+                            .padding(4.dp)
                 ) {
 
-                    messages.value.forEachIndexed { index, m ->
+                    sendMessages.value.forEachIndexed { index, m ->
                         if (m.isMaximize) {
                             MessageMaxItem(
                                     message = m,
@@ -105,7 +103,15 @@ fun MessagesSendPanel(
                     modifier = Modifier.fillMaxWidth()
             ) {
                 Button(
-                        onClick = { messagesViewModel.addMessage() }
+                        onClick = {
+                            val lastMessage =
+                                sendMessages.value.getOrNull(sendMessages.value.lastIndex)
+                            messagesViewModel.addMessage(
+                                    SendModel(
+                                            topic = lastMessage?.topic ?: "",
+                                    )
+                            )
+                        }
                 ) {
                     Text("Add Message")
                 }

@@ -1,6 +1,7 @@
 
 import com.vikmanz.stomptc.model.ConnectionModel
-import com.vikmanz.stomptc.model.StompMessageModel
+import com.vikmanz.stomptc.model.SendModel
+import com.vikmanz.stomptc.model.SubscriptionModel
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import java.io.File
@@ -8,24 +9,25 @@ import java.io.File
 object StorageService {
     private val json = Json { prettyPrint = true }
 
-    fun save(config: ConnectionModel, messages: List<StompMessageModel>) {
-        val wrapper = StorageWrapper(config, messages)
+    fun save(config: ConnectionModel, subscriptions: List<SubscriptionModel>, messages: List<SendModel>) {
+        val wrapper = StorageData(config, subscriptions, messages)
         File("stomp_config.json").writeText(json.encodeToString(wrapper))
     }
 
-    fun load(): Pair<ConnectionModel, List<StompMessageModel>> {
+    fun load(): StorageData {
         val file = File("stomp_config.json")
         return if (file.exists()) {
-            val wrapper = json.decodeFromString<StorageWrapper>(file.readText())
-            wrapper.config to wrapper.messages
+            val wrapper = json.decodeFromString<StorageData>(file.readText())
+            wrapper
         } else {
-            ConnectionModel() to emptyList()
+            StorageData(ConnectionModel(), emptyList(), emptyList())
         }
     }
-
-    @kotlinx.serialization.Serializable
-    data class StorageWrapper(
-        val config: ConnectionModel,
-        val messages: List<StompMessageModel>
-    )
 }
+
+@kotlinx.serialization.Serializable
+data class StorageData(
+    val config: ConnectionModel,
+    val subscriptions: List<SubscriptionModel>,
+    val sends: List<SendModel>
+)

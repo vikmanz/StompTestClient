@@ -4,6 +4,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class HeaderModel(
-    val key: String,
-    val value: String
+    val key: String = "",
+    val value: String = ""
 )

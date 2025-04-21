@@ -2,6 +2,7 @@ package com.vikmanz.stomptc.ui.components.subscribe
 
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -14,6 +15,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Done
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -63,19 +65,24 @@ fun SubscribeReadLine(
                     modifier = Modifier.weight(1f)
             )
 
-            CustomIconButton(
-                    onClick = {
-                        onUnSubscribe(sub)
-                    },
-                    icon = Icons.Default.Close
-            )
+            Row(
+                    horizontalArrangement = Arrangement.spacedBy(4.dp)
+            ) {
+                CustomIconButton(
+                        onClick = {
+                            onUnSubscribe(sub)
+                        },
+                        icon = Icons.Default.Edit
+                )
 
-            CustomIconButton(
-                    onClick = {
-                        onDelete(sub)
-                    },
-                    icon = Icons.Default.Delete
-            )
+                CustomIconButton(
+                        onClick = {
+                            onDelete(sub)
+                        },
+                        icon = Icons.Default.Delete
+                )
+            }
+
         }
     }
 }

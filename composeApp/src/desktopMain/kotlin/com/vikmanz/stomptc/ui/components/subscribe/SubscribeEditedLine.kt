@@ -46,7 +46,9 @@ fun SubscribeEditedLine(
                 modifier = Modifier.weight(1f)
         )
 
-        Row {
+        Row(
+                horizontalArrangement = Arrangement.spacedBy(4.dp)
+        ) {
             CustomIconButton(
                     onClick = {
                         onSubscribe(sub)

@@ -3,7 +3,7 @@ package com.vikmanz.stomptc.model
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class StompMessageModel(
+data class SendModel(
     val topic: String = "/app/example",
     val message: String = "{}",
     val headers: List<HeaderModel> = emptyList(),

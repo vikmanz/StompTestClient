@@ -2,7 +2,7 @@ import androidx.compose.runtime.MutableState
 import com.vikmanz.stomptc.model.ConnectionModel
 import com.vikmanz.stomptc.model.StompFrame
 import com.vikmanz.stomptc.model.StompFrameBuilder
-import com.vikmanz.stomptc.model.StompMessageModel
+import com.vikmanz.stomptc.model.SendModel
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.websocket.WebSockets
 import io.ktor.client.plugins.websocket.webSocketSession
@@ -106,7 +106,7 @@ object StompService {
     }
 
 
-    suspend fun send(message: StompMessageModel) {
+    suspend fun send(message: SendModel) {
         val extraHeaders = message.headers.associate { it.key to it.value }
         val allHeaders = mapOf("destination" to message.topic) + extraHeaders
 

@@ -5,20 +5,18 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Done
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.vikmanz.stomptc.model.StompMessageModel
+import com.vikmanz.stomptc.model.SendModel
 import com.vikmanz.stomptc.ui.components.common.CustomButton
 import com.vikmanz.stomptc.ui.components.common.CustomIconButton
 
@@ -32,8 +30,8 @@ fun MessageMinItemPreview() {
 
 @Composable
 fun MessageMinItem(
-    message: StompMessageModel = StompMessageModel(),
-    onUpdate: (StompMessageModel) -> Unit = {},
+    message: SendModel = SendModel(),
+    onUpdate: (SendModel) -> Unit = {},
     onSend: () -> Unit = {},
 ) {
     Card(
@@ -47,12 +45,11 @@ fun MessageMinItem(
         Row(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth().padding(8.dp)
         ) {
             Text(
                     message.name,
-                    style = MaterialTheme.typography.subtitle1,
-                    modifier = Modifier.padding(start = 12.dp)
+                    style = MaterialTheme.typography.subtitle1
             )
 
             Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {

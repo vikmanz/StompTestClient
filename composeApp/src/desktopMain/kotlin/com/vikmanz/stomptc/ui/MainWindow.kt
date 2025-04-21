@@ -1,21 +1,16 @@
 package com.vikmanz.stomptc.ui
 
 import androidx.compose.desktop.ui.tooling.preview.Preview
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.vikmanz.stomptc.ui.components.ConnectionPanel
+import com.vikmanz.stomptc.ui.components.connection.ConnectionPanel
 import com.vikmanz.stomptc.ui.components.message_income.IncomingMessagesBlock
-import com.vikmanz.stomptc.ui.components.message_income.IncomingMessagesBlockPreview
 import com.vikmanz.stomptc.ui.components.message_outcome.MessagesSendPanel
 import com.vikmanz.stomptc.ui.components.subscribe.SubscriptionBlock
 import com.vikmanz.stomptc.ui.vm.ConnectionViewModel

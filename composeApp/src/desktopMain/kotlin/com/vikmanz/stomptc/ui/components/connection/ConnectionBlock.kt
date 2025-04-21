@@ -1,4 +1,4 @@
-package com.vikmanz.stomptc.ui.components
+package com.vikmanz.stomptc.ui.components.connection
 
 import com.vikmanz.stomptc.ui.components.headers.HeadersBlock
 import androidx.compose.desktop.ui.tooling.preview.Preview
@@ -62,8 +62,9 @@ fun ConnectionPanel(
 
             HeadersBlock(
                     headers = connectionConfig.headers,
-                    onAdd = { connectionViewModel.addHeader(it) },
-                    onRemove = { connectionViewModel.removeHeader(it) },
+                    onAdd =  connectionViewModel::addHeader,
+                    onChange = connectionViewModel::updateHeader,
+                    onRemove = connectionViewModel::removeHeader
             )
 
             Spacer(modifier = Modifier.height(8.dp))
@@ -76,7 +77,9 @@ fun ConnectionPanel(
                         horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     Button(
-                            onClick = { connectionViewModel.loadFromStorage() }
+                            onClick = {
+                                connectionViewModel.loadFromStorage()
+                            }
                     ) {
                         Text("Load")
                     }

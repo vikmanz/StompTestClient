@@ -4,7 +4,7 @@ import StompService
 import StorageService
 import com.vikmanz.stomptc.model.ConnectionModel
 import com.vikmanz.stomptc.model.HeaderModel
-import com.vikmanz.stomptc.model.StompMessageModel
+import com.vikmanz.stomptc.model.SendModel
 import com.vikmanz.stomptc.model.SubscriptionModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -19,10 +19,14 @@ class ConnectionViewModel {
     private val _connectionStatus = MutableStateFlow("Disconnected")
     val connectionStatus: StateFlow<String> = _connectionStatus
 
-    private val _subs = MutableStateFlow(listOf(SubscriptionModel("/topic/user/4")))
+    private val _subs = MutableStateFlow(listOf(SubscriptionModel("/topic/user/")))
     val subs: StateFlow<List<SubscriptionModel>> = _subs
 
     private val coroutineScope = CoroutineScope(Dispatchers.IO)
+
+    init {
+        loadFromStorage()
+    }
 
     fun updateEndpoint(endpoint: String) {
         _connectionConfig.value = _connectionConfig.value.copy(endpoint = endpoint)
@@ -37,6 +41,12 @@ class ConnectionViewModel {
     fun removeHeader(header: HeaderModel) {
         val newHeaders = _connectionConfig.value.headers.toMutableList()
         newHeaders.remove(header)
+        _connectionConfig.value = _connectionConfig.value.copy(headers = newHeaders)
+    }
+
+    fun updateHeader(index:Int, header: HeaderModel) {
+        val newHeaders = _connectionConfig.value.headers.toMutableList()
+        newHeaders[index] = header
         _connectionConfig.value = _connectionConfig.value.copy(headers = newHeaders)
     }
 
@@ -116,11 +126,17 @@ class ConnectionViewModel {
     }
 
     fun loadFromStorage() {
-        val (config, _) = StorageService.load()
-        _connectionConfig.value = config
+        val storageData = StorageService.load()
+        _connectionConfig.value = storageData.config
+        _subs.value = storageData.subscriptions
     }
 
-    fun saveToStorage(messages: List<StompMessageModel>) {
-        StorageService.save(_connectionConfig.value, messages)
+    fun saveToStorage(messages: List<SendModel>) {
+        StorageService.save(
+                _connectionConfig.value,
+                _subs.value.map { it.copy(isSubscribed = false)},
+                messages
+        )
     }
+
 }
