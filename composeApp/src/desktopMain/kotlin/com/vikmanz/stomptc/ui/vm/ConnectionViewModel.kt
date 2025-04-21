@@ -1,7 +1,7 @@
 package com.vikmanz.stomptc.ui.vm
 
 import StompService
-import StorageService
+import com.vikmanz.stomptc.service.StorageService
 import com.vikmanz.stomptc.model.ConnectionModel
 import com.vikmanz.stomptc.model.HeaderModel
 import com.vikmanz.stomptc.model.SendModel
