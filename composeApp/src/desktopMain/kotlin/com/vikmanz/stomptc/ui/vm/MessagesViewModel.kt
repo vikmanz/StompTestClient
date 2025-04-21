@@ -19,10 +19,6 @@ class MessagesViewModel {
 
     private val coroutineScope = CoroutineScope(Dispatchers.IO)
 
-    init {
-        loadFromStorage()
-    }
-
     fun clearIncomingMessages() {
         StompService.clearIncomingMessages()
     }
@@ -52,9 +48,8 @@ class MessagesViewModel {
         }
     }
 
-    private fun loadFromStorage() {
-        val storageData = StorageService.load()
-        _outcomeMessages.value = storageData.sends
+    fun loadFromStorage(sends: List<SendModel>) {
+        _outcomeMessages.value = sends
     }
 
 }

@@ -1,11 +1,13 @@
 package com.vikmanz.stomptc.ui.vm
 
 import StompService
+import com.sun.org.apache.xml.internal.serializer.utils.Utils
 import com.vikmanz.stomptc.service.StorageService
 import com.vikmanz.stomptc.model.ConnectionModel
 import com.vikmanz.stomptc.model.HeaderModel
 import com.vikmanz.stomptc.model.SendModel
 import com.vikmanz.stomptc.model.SubscriptionModel
+import com.vikmanz.stomptc.service.StorageData
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -23,10 +25,6 @@ class ConnectionViewModel {
     val subs: StateFlow<List<SubscriptionModel>> = _subs
 
     private val coroutineScope = CoroutineScope(Dispatchers.IO)
-
-    init {
-        loadFromStorage()
-    }
 
     fun updateEndpoint(endpoint: String) {
         _connectionConfig.value = _connectionConfig.value.copy(endpoint = endpoint)
@@ -125,18 +123,21 @@ class ConnectionViewModel {
         }
     }
 
-    fun loadFromStorage() {
-        val storageData = StorageService.load()
-        _connectionConfig.value = storageData.config
-        _subs.value = storageData.subscriptions
-    }
-
     fun saveToStorage(messages: List<SendModel>) {
-        StorageService.save(
+        StorageService.saveWithDialog(
                 _connectionConfig.value,
                 _subs.value.map { it.copy(isSubscribed = false)},
                 messages
         )
+    }
+
+    fun loadFromStorage(): StorageData? {
+        val storageData = StorageService.loadWithDialog()
+        storageData?.let {
+            _connectionConfig.value = storageData.config
+            _subs.value = storageData.subscriptions
+        }
+        return storageData
     }
 
 }

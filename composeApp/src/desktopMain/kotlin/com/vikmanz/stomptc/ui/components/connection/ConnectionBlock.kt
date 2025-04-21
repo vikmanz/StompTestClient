@@ -34,7 +34,8 @@ fun ConnectionPanelPreview() {
 @Composable
 fun ConnectionPanel(
     connectionViewModel: ConnectionViewModel = ConnectionViewModel(),
-    onSave: () -> Unit = {}
+    onSave: () -> Unit = {},
+    onLoad: () -> Unit = {}
 ) {
     val connectionConfig by connectionViewModel.connectionConfig.collectAsState()
     val connectionStatus by connectionViewModel.connectionStatus.collectAsState()
@@ -77,9 +78,7 @@ fun ConnectionPanel(
                         horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     Button(
-                            onClick = {
-                                connectionViewModel.loadFromStorage()
-                            }
+                            onClick = onLoad
                     ) {
                         Text("Load")
                     }

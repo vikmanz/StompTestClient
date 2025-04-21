@@ -9,6 +9,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.sun.org.apache.xml.internal.serializer.utils.Utils.messages
+import com.vikmanz.stomptc.service.StorageService
 import com.vikmanz.stomptc.ui.components.connection.ConnectionPanel
 import com.vikmanz.stomptc.ui.components.message_income.IncomingMessagesBlock
 import com.vikmanz.stomptc.ui.components.message_outcome.MessagesSendPanel
@@ -45,6 +47,11 @@ fun MainWindow(
                     connectionViewModel = connectionViewModel,
                     onSave = {
                         connectionViewModel.saveToStorage(messagesViewModel.outcomeMessages.value)
+                    },
+                    onLoad = {
+                        connectionViewModel.loadFromStorage()?.let {
+                            messagesViewModel.loadFromStorage(it.sends)
+                        }
                     }
             )
 
