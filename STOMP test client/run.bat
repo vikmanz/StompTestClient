@@ -1,0 +1,1 @@
+start javaw -jar stomptc-0.0.1.jar

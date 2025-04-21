@@ -27,8 +27,9 @@ kotlin {
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
+//            implementation("org.jetbrains.compose.ui:ui-desktop:1.7.3")
             implementation(libs.kotlinx.coroutines.swing)
-            implementation("org.jetbrains.compose.ui:ui-tooling-preview-desktop:1.8.0-beta02")
+            implementation("org.jetbrains.compose.ui:ui-tooling-preview-desktop:1.7.3")
 
             implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
             implementation("org.json:json:20231013")
@@ -42,15 +43,37 @@ kotlin {
     }
 }
 
-
+// exe portable [build/compose/binaries] -> ./gradlew createDistributable
+// exe install  [build/compose/binaries] -> ./gradlew packageReleaseDistributionForCurrentOS
+// jar [build/compose/jars] -> ./gradlew packageReleaseJar
 compose.desktop {
     application {
         mainClass = "com.vikmanz.stomptc.app.MainKt"
 
-        nativeDistributions {
-            targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
-            packageName = "com.vikmanz.stomptc"
-            packageVersion = "1.0.0"
+        buildTypes {
+            release {
+                proguard {
+                    isEnabled = false
+                }
+            }
         }
+
+        jvmArgs += listOf("-Xmx256m")
+
+
+        nativeDistributions {
+            targetFormats(TargetFormat.Exe)
+            packageName = "stomptc"
+            packageVersion = "0.0.1"
+
+
+            windows {
+                menuGroup = "STOMP test client"
+                shortcut = true
+                console = false
+            }
+        }
+
     }
+
 }
