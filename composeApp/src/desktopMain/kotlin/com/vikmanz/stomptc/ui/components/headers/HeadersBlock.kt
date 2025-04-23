@@ -10,11 +10,13 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.vikmanz.stomptc.model.HeaderModel
+import com.vikmanz.stomptc.ui.theme.COLOR_Red
 
 @Preview
 @Composable
@@ -43,22 +45,23 @@ fun HeadersBlock(
 
         headers.forEachIndexed { index, header ->
             HeaderLine(
-                    key = header.key,
-                    value = header.value,
-                    onKeyChange = {
+                key = header.key,
+                value = header.value,
+                onKeyChange = {
                         onChange(
                                 index,
                                 header.copy(key = it)
                         )
                     },
-                    onValueChange = {
+                onValueChange = {
                         onChange(
                                 index,
                                 header.copy(value = it)
                         )
                     },
-                    icon = Icons.Default.Close,
-                    onButtonClick = { onRemove(header) }
+                icon = Icons.Default.Delete,
+                iconColor = COLOR_Red,
+                onButtonClick = { onRemove(header) }
             )
         }
 

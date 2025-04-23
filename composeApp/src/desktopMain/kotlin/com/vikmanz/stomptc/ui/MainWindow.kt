@@ -31,6 +31,9 @@ fun MainWindow(
     messagesViewModel: MessagesViewModel = MessagesViewModel(),
 ) {
 
+    //todo reconect
+    //todo need autoscroll if enable checkbox
+
     val subs = connectionViewModel.subs.collectAsState()
     val incomingMessages = messagesViewModel.incomeMessages.collectAsState()
 

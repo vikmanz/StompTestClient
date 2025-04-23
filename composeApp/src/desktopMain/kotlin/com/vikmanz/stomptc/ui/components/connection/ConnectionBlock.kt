@@ -21,6 +21,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.vikmanz.stomptc.model.ConnectionStatus
 import com.vikmanz.stomptc.ui.vm.ConnectionViewModel
 
 @Preview
@@ -70,32 +71,45 @@ fun ConnectionPanel(
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            Row(
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    modifier = Modifier.fillMaxWidth()
+            Column(
+                verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                Row(
-                        horizontalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    Button(
-                            onClick = onLoad
-                    ) {
-                        Text("Load")
-                    }
 
-                    Button(
-                            onClick = onSave
-                    ) {
-                        Text("Save")
-                    }
+                if (!ConnectionStatus.isValidStatus(connectionStatus)) {
+                    Text(
+                        connectionStatus,
+                        modifier = Modifier.align(Alignment.CenterHorizontally)
+                    )
                 }
 
-                Text(
-                        connectionStatus,
-                        modifier = Modifier.align(Alignment.CenterVertically)
-                )
+                Row(
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        Button(
+                            onClick = onLoad
+                        ) {
+                            Text("Load")
+                        }
 
-                Button(
+                        Button(
+                            onClick = onSave
+                        ) {
+                            Text("Save")
+                        }
+                    }
+
+                    if (ConnectionStatus.isValidStatus(connectionStatus)) {
+                        Text(
+                            connectionStatus,
+                            modifier = Modifier.align(Alignment.CenterVertically)
+                        )
+                    }
+
+                    Button(
                         onClick = {
                             if (connectionStatus == "Connected") {
                                 connectionViewModel.disconnect()
@@ -104,12 +118,14 @@ fun ConnectionPanel(
                             }
                         },
                         colors = ButtonDefaults.buttonColors(
-                                backgroundColor = if (connectionStatus == "Connected") MaterialTheme.colors.error else MaterialTheme.colors.primary
-                        )
-                ) {
-                    Text(if (connectionStatus == "Connected") "Disconnect" else "Connect")
+                            backgroundColor = if (connectionStatus == "Connected") MaterialTheme.colors.error else MaterialTheme.colors.primary
+                        ),
+                    ) {
+                        Text(if (connectionStatus == "Connected") "Disconnect" else "Connect")
+                    }
                 }
             }
+
         }
     }
 }

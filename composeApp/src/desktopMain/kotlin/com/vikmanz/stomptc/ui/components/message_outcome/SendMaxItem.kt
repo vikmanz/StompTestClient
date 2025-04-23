@@ -1,6 +1,5 @@
 package com.vikmanz.stomptc.ui.components.message_outcome
 
-import com.vikmanz.stomptc.ui.components.headers.HeadersBlock
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
@@ -15,6 +14,7 @@ import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Done
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -24,6 +24,9 @@ import androidx.compose.ui.unit.dp
 import com.vikmanz.stomptc.model.SendModel
 import com.vikmanz.stomptc.ui.components.common.CustomButton
 import com.vikmanz.stomptc.ui.components.common.CustomIconButton
+import com.vikmanz.stomptc.ui.components.headers.HeadersBlock
+import com.vikmanz.stomptc.ui.theme.COLOR_Green
+import com.vikmanz.stomptc.ui.theme.COLOR_Red
 
 @Preview
 @Composable
@@ -68,11 +71,13 @@ fun MessageMaxItem(
                             onClick = {
                                 onUpdate(message.copy(isMaximize = false))
                             },
-                            icon = Icons.Default.Done
+                            icon = Icons.Default.Done,
+                            color = COLOR_Green
                     )
                     CustomIconButton(
                             onClick = onRemove,
-                            icon = Icons.Default.Close
+                            icon = Icons.Default.Delete,
+                            color = COLOR_Red
                     )
                 }
             }
@@ -169,7 +174,8 @@ fun MessageMaxItem(
                             onClick = {
                                 onUpdate(message.copy(isMaximize = false))
                             },
-                            icon = Icons.Default.Done
+                            icon = Icons.Default.Done,
+                            color = COLOR_Green
                     )
                     CustomButton(
                             text = "Send",

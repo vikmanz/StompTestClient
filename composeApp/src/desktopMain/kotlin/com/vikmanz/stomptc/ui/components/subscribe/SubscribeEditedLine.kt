@@ -12,9 +12,12 @@ import androidx.compose.material.icons.filled.Done
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.vikmanz.stomptc.model.SubscriptionModel
 import com.vikmanz.stomptc.ui.components.common.CustomIconButton
+import com.vikmanz.stomptc.ui.theme.COLOR_Green
+import com.vikmanz.stomptc.ui.theme.COLOR_Red
 
 @Preview
 @Composable
@@ -60,7 +63,8 @@ fun SubscribeEditedLine(
                     onClick = {
                         onDelete(sub)
                     },
-                    icon = Icons.Default.Delete
+                    icon = Icons.Default.Delete,
+                    color = COLOR_Red
             )
         }
 

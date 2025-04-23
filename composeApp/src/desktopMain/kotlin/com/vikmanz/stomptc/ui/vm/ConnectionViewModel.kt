@@ -1,9 +1,9 @@
 package com.vikmanz.stomptc.ui.vm
 
 import StompService
-import com.sun.org.apache.xml.internal.serializer.utils.Utils
 import com.vikmanz.stomptc.service.StorageService
 import com.vikmanz.stomptc.model.ConnectionModel
+import com.vikmanz.stomptc.model.ConnectionStatus
 import com.vikmanz.stomptc.model.HeaderModel
 import com.vikmanz.stomptc.model.SendModel
 import com.vikmanz.stomptc.model.SubscriptionModel
@@ -12,13 +12,14 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class ConnectionViewModel {
     private val _connectionConfig = MutableStateFlow(ConnectionModel())
     val connectionConfig: StateFlow<ConnectionModel> = _connectionConfig
 
-    private val _connectionStatus = MutableStateFlow("Disconnected")
+    private val _connectionStatus = MutableStateFlow(ConnectionStatus.DISCONNECTED.label)
     val connectionStatus: StateFlow<String> = _connectionStatus
 
     private val _subs = MutableStateFlow(listOf(SubscriptionModel("/topic/user/")))
@@ -49,7 +50,9 @@ class ConnectionViewModel {
     }
 
     fun subscribe(sub: SubscriptionModel) {
-        if (!sub.isSubscribed && sub.topic.isNotBlank()) {
+        if (
+            _connectionConfig.value.isConnected &&
+            !sub.isSubscribed && sub.topic.isNotBlank()) {
             coroutineScope.launch {
                 println("subscribe! $sub")
                 StompService.subscribe(sub.topic)
@@ -60,6 +63,8 @@ class ConnectionViewModel {
                     onSubscribeChange(sub.copy(isSubscribed = true))
                 }
             }
+        } else {
+            println("Connection ${if (_connectionConfig.value.isConnected) "connected." else "NOT connected."}")
         }
     }
 
@@ -99,9 +104,10 @@ class ConnectionViewModel {
     fun connect() {
         coroutineScope.launch {
             try {
-                _connectionStatus.value = "Connecting..."
+                _connectionStatus.value = ConnectionStatus.CONNECTING.label
                 StompService.connect(_connectionConfig.value)
-                _connectionStatus.value = "Connected"
+                _connectionConfig.update { it.copy(isConnected = true) }
+                _connectionStatus.value = ConnectionStatus.CONNECTED.label
             } catch (e: Exception) {
                 _connectionStatus.value = "Error: ${e.message}"
             }
@@ -111,12 +117,12 @@ class ConnectionViewModel {
     fun disconnect() {
         coroutineScope.launch {
             try {
-                _connectionStatus.value = "Disconnecting..."
+                _connectionStatus.value = ConnectionStatus.DISCONNECTING.label
                 StompService.disconnect()
                 _subs.value = _subs.value.map {
                     it.copy(isSubscribed = false)
                 }
-                _connectionStatus.value = "Disconnected"
+                _connectionStatus.value = ConnectionStatus.DISCONNECTED.label
             } catch (e: Exception) {
                 _connectionStatus.value = "Error: ${e.message}"
             }

@@ -25,7 +25,7 @@ fun PrettyJsonText(
     jsonString: String,
     style: TextStyle
 ) {
-    println(jsonString)
+
     val formattedJson = try {
         val jsonObject = JSONObject(jsonString)
         formatJson(jsonObject, 0)

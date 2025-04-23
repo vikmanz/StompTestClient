@@ -4,7 +4,6 @@ import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
@@ -16,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import com.vikmanz.stomptc.ui.components.common.CustomIconButton
+import androidx.compose.ui.graphics.Color
 
 @Preview
 @Composable
@@ -32,6 +32,7 @@ fun HeaderLine(
     onKeyChange: (String) -> Unit = {},
     onValueChange: (String) -> Unit = {},
     icon: ImageVector = Icons.Default.Close,
+    iconColor: Color = Color.Transparent,
     onButtonClick: () -> Unit = {},
 ) {
     Row(
@@ -58,7 +59,8 @@ fun HeaderLine(
 
         CustomIconButton(
                 onClick = onButtonClick,
-                icon = icon
+                icon = icon,
+                color = iconColor
         )
     }
 }
