@@ -75,7 +75,8 @@ fun SubscribeReadLine(
                             onUnSubscribe(sub)
                         },
                         icon = Icons.Default.Edit,
-                        color = COLOR_Green
+                        color = COLOR_Green,
+                        iconTint = Color.White,
                 )
 
 //                CustomIconButton(
@@ -83,7 +84,8 @@ fun SubscribeReadLine(
 //                            onDelete(sub)
 //                        },
 //                        icon = Icons.Default.Delete,
-//                        color = COLOR_Red
+//                        color = COLOR_Red,
+//                    iconTint = Color.White
 //                )
             }
 

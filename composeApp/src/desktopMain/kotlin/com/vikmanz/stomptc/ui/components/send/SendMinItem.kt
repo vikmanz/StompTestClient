@@ -1,4 +1,4 @@
-package com.vikmanz.stomptc.ui.components.message_outcome
+package com.vikmanz.stomptc.ui.components.send
 
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.BorderStroke
@@ -10,11 +10,13 @@ import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.Send
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.vikmanz.stomptc.model.SendModel
 import com.vikmanz.stomptc.ui.components.common.CustomButton
@@ -49,7 +51,10 @@ fun MessageMinItem(
         ) {
             Text(
                     message.name,
-                    style = MaterialTheme.typography.subtitle1
+                    style = MaterialTheme.typography.h5,
+                    overflow = TextOverflow.Ellipsis,
+                    maxLines = 1,
+                    modifier = Modifier.weight(1f)
             )
 
             Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
@@ -63,10 +68,12 @@ fun MessageMinItem(
                         },
                         icon = Icons.Default.Edit
                 )
-                CustomButton(
-                        text = "Send",
-                        onClick = onSend,
+
+                CustomIconButton(
+                    onClick = onSend,
+                    icon =  Icons.AutoMirrored.Filled.Send,
                 )
+
             }
         }
 

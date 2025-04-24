@@ -1,21 +1,19 @@
 package com.vikmanz.stomptc.ui.components.headers
 
 import androidx.compose.desktop.ui.tooling.preview.Preview
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.graphics.Color
 import com.vikmanz.stomptc.model.HeaderModel
+import com.vikmanz.stomptc.ui.components.common.CollapsibleFlatCard
 import com.vikmanz.stomptc.ui.theme.COLOR_Red
 
 @Preview
@@ -34,14 +32,9 @@ fun HeadersBlock(
     onRemove: (HeaderModel) -> Unit = {},
 ) {
 
-    Column(
-            verticalArrangement = Arrangement.spacedBy(2.dp),
+    CollapsibleFlatCard(
+        title = "Headers"
     ) {
-
-        Text(
-                "Headers",
-                style = MaterialTheme.typography.subtitle1
-        )
 
         headers.forEachIndexed { index, header ->
             HeaderLine(
@@ -61,6 +54,7 @@ fun HeadersBlock(
                     },
                 icon = Icons.Default.Delete,
                 iconColor = COLOR_Red,
+                iconTint = Color.White,
                 onButtonClick = { onRemove(header) }
             )
         }

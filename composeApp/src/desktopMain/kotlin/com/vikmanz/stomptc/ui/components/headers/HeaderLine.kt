@@ -12,10 +12,10 @@ import androidx.compose.material.icons.filled.Close
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import com.vikmanz.stomptc.ui.components.common.CustomIconButton
-import androidx.compose.ui.graphics.Color
 
 @Preview
 @Composable
@@ -32,7 +32,8 @@ fun HeaderLine(
     onKeyChange: (String) -> Unit = {},
     onValueChange: (String) -> Unit = {},
     icon: ImageVector = Icons.Default.Close,
-    iconColor: Color = Color.Transparent,
+    iconColor: Color = Color.Black,
+    iconTint: Color = Color.White,
     onButtonClick: () -> Unit = {},
 ) {
     Row(
@@ -60,7 +61,8 @@ fun HeaderLine(
         CustomIconButton(
                 onClick = onButtonClick,
                 icon = icon,
-                color = iconColor
+                color = iconColor,
+                iconTint = iconTint
         )
     }
 }

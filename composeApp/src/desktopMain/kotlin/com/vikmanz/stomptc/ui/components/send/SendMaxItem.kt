@@ -1,4 +1,4 @@
-package com.vikmanz.stomptc.ui.components.message_outcome
+package com.vikmanz.stomptc.ui.components.send
 
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.BorderStroke
@@ -13,7 +13,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.automirrored.filled.Send
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Done
 import androidx.compose.runtime.Composable
@@ -22,9 +22,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.vikmanz.stomptc.model.SendModel
-import com.vikmanz.stomptc.ui.components.common.CustomButton
 import com.vikmanz.stomptc.ui.components.common.CustomIconButton
 import com.vikmanz.stomptc.ui.components.headers.HeadersBlock
+import com.vikmanz.stomptc.ui.theme.COLOR_Card_bg
 import com.vikmanz.stomptc.ui.theme.COLOR_Green
 import com.vikmanz.stomptc.ui.theme.COLOR_Red
 
@@ -46,6 +46,7 @@ fun MessageMaxItem(
 
     Card(
             shape = MaterialTheme.shapes.small,
+            backgroundColor = COLOR_Card_bg,
             border = BorderStroke(
                     1.dp,
                     Color.Black
@@ -72,12 +73,14 @@ fun MessageMaxItem(
                                 onUpdate(message.copy(isMaximize = false))
                             },
                             icon = Icons.Default.Done,
-                            color = COLOR_Green
+                            color = COLOR_Green,
+                            iconTint = Color.White,
                     )
                     CustomIconButton(
                             onClick = onRemove,
                             icon = Icons.Default.Delete,
-                            color = COLOR_Red
+                            color = COLOR_Red,
+                            iconTint = Color.White
                     )
                 }
             }
@@ -146,11 +149,13 @@ fun MessageMaxItem(
 
             Row(
                     modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.spacedBy(16.dp)
             ) {
 
                 Row(
                         horizontalArrangement = Arrangement.spacedBy(4.dp),
+                        verticalAlignment = Alignment.CenterVertically,
                         modifier = Modifier.weight(1f),
                 ) {
                     Text(
@@ -168,19 +173,23 @@ fun MessageMaxItem(
                 }
 
                 Row(
-                        horizontalArrangement = Arrangement.spacedBy(4.dp)
+                        horizontalArrangement = Arrangement.spacedBy(4.dp),
+                        verticalAlignment = Alignment.CenterVertically
                 ) {
                     CustomIconButton(
                             onClick = {
                                 onUpdate(message.copy(isMaximize = false))
                             },
                             icon = Icons.Default.Done,
-                            color = COLOR_Green
+                            color = COLOR_Green,
+                            iconTint = Color.White,
                     )
-                    CustomButton(
-                            text = "Send",
-                            onClick = onSend,
+
+                    CustomIconButton(
+                        onClick = onSend,
+                        icon =  Icons.AutoMirrored.Filled.Send,
                     )
+
                 }
             }
         }

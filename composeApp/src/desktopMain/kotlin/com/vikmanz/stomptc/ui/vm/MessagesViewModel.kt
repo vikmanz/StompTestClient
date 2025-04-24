@@ -39,6 +39,9 @@ class MessagesViewModel {
 
     fun sendMessage(index: Int) {
         val message = _outcomeMessages.value.getOrNull(index) ?: return
+        if (message.topic.isEmpty()) {
+            return
+        }
         coroutineScope.launch {
             try {
                 StompService.send(message)

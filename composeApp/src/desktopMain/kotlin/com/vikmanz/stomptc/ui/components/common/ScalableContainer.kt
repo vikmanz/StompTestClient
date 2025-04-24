@@ -1,4 +1,4 @@
-package com.vikmanz.stomptc.app
+package com.vikmanz.stomptc.ui.components.common
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider

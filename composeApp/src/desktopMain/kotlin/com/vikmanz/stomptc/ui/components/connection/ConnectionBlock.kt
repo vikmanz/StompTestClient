@@ -20,8 +20,10 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.vikmanz.stomptc.model.ConnectionStatus
+import com.vikmanz.stomptc.ui.components.common.CollapsibleCard
 import com.vikmanz.stomptc.ui.vm.ConnectionViewModel
 
 @Preview
@@ -41,18 +43,9 @@ fun ConnectionPanel(
     val connectionConfig by connectionViewModel.connectionConfig.collectAsState()
     val connectionStatus by connectionViewModel.connectionStatus.collectAsState()
 
-    Card(
-            modifier = Modifier.fillMaxWidth()
+    CollapsibleCard(
+        title = "Connection Settings"
     ) {
-        Column(
-                verticalArrangement = Arrangement.spacedBy(8.dp),
-                modifier = Modifier.padding(16.dp)
-        ) {
-
-            Text(
-                    "Connection Settings",
-                    style = MaterialTheme.typography.h6
-            )
 
             OutlinedTextField(
                     value = connectionConfig.endpoint,
@@ -60,7 +53,6 @@ fun ConnectionPanel(
                     label = { Text("WebSocket Endpoint") },
                     modifier = Modifier.fillMaxWidth()
             )
-
 
             HeadersBlock(
                     headers = connectionConfig.headers,
@@ -86,6 +78,7 @@ fun ConnectionPanel(
                     horizontalArrangement = Arrangement.SpaceBetween,
                     modifier = Modifier.fillMaxWidth()
                 ) {
+
                     Row(
                         horizontalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
@@ -105,7 +98,8 @@ fun ConnectionPanel(
                     if (ConnectionStatus.isValidStatus(connectionStatus)) {
                         Text(
                             connectionStatus,
-                            modifier = Modifier.align(Alignment.CenterVertically)
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier.weight(1f).align(Alignment.CenterVertically)
                         )
                     }
 
@@ -123,9 +117,9 @@ fun ConnectionPanel(
                     ) {
                         Text(if (connectionStatus == "Connected") "Disconnect" else "Connect")
                     }
+
                 }
             }
 
         }
-    }
 }

@@ -1,4 +1,4 @@
-package com.vikmanz.stomptc.ui.components.message_income
+package com.vikmanz.stomptc.ui.components.income
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column

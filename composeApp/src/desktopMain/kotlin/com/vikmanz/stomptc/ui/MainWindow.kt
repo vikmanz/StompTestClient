@@ -2,18 +2,19 @@ package com.vikmanz.stomptc.ui
 
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.sun.org.apache.xml.internal.serializer.utils.Utils.messages
-import com.vikmanz.stomptc.service.StorageService
 import com.vikmanz.stomptc.ui.components.connection.ConnectionPanel
-import com.vikmanz.stomptc.ui.components.message_income.IncomingMessagesBlock
-import com.vikmanz.stomptc.ui.components.message_outcome.MessagesSendPanel
+import com.vikmanz.stomptc.ui.components.income.IncomingMessagesBlock
+import com.vikmanz.stomptc.ui.components.send.MessagesSendPanel
 import com.vikmanz.stomptc.ui.components.subscribe.SubscriptionBlock
 import com.vikmanz.stomptc.ui.vm.ConnectionViewModel
 import com.vikmanz.stomptc.ui.vm.MessagesViewModel
@@ -32,7 +33,7 @@ fun MainWindow(
 ) {
 
     //todo reconect
-    //todo need autoscroll if enable checkbox
+    //todo add scroll line for messages income
 
     val subs = connectionViewModel.subs.collectAsState()
     val incomingMessages = messagesViewModel.incomeMessages.collectAsState()
@@ -43,8 +44,7 @@ fun MainWindow(
                 modifier = Modifier
                     .fillMaxHeight()
                     .fillMaxWidth(0.33f)
-                    .padding(16.dp)
-                    .verticalScroll(rememberScrollState())
+                    .padding(8.dp)
         ) {
             ConnectionPanel(
                     connectionViewModel = connectionViewModel,
@@ -68,7 +68,7 @@ fun MainWindow(
             )
 
             MessagesSendPanel(
-                    messagesViewModel = messagesViewModel
+                    messagesViewModel = messagesViewModel,
             )
 
         }

@@ -64,7 +64,8 @@ fun SubscribeEditedLine(
                         onDelete(sub)
                     },
                     icon = Icons.Default.Delete,
-                    color = COLOR_Red
+                    color = COLOR_Red,
+                    iconTint = Color.White
             )
         }
 

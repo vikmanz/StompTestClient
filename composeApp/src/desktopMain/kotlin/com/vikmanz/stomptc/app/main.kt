@@ -16,6 +16,7 @@ import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
 import com.vikmanz.stomptc.ui.MainWindow
+import com.vikmanz.stomptc.ui.components.common.ScalableContainer
 import com.vikmanz.stomptc.ui.vm.ConnectionViewModel
 import com.vikmanz.stomptc.ui.vm.MessagesViewModel
 import kotlin.math.sign
