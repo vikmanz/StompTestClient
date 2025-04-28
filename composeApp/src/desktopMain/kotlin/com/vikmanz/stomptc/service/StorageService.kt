@@ -21,7 +21,12 @@ object StorageService {
         val file = FileDialogUtil.showLoadDialog() ?: return null
         return try {
             val wrapper = json.decodeFromString<StorageData>(file.readText())
-            wrapper
+            wrapper.let {
+                it.copy(
+                    config = it.config.copy(isConnected = false),
+                    subscriptions = it.subscriptions.map { it.copy(isSubscribed = false) }
+                )
+            }
         } catch (e: Exception) {
             e.printStackTrace()
             null

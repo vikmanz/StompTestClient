@@ -2,14 +2,13 @@ package com.vikmanz.stomptc.ui.components.subscribe
 
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.vikmanz.stomptc.model.SubscriptionModel
+import com.vikmanz.stomptc.ui.components.common.CircleAndText
 import com.vikmanz.stomptc.ui.components.common.CollapsibleCard
 import com.vikmanz.stomptc.ui.components.common.CustomButton
 
@@ -34,7 +33,12 @@ fun SubscriptionBlock(
 ) {
 
     CollapsibleCard(
-        title = "Subscribes"
+        title = "Subscribes",
+        headerContent = {
+            if (subscriptions.any { it.isSubscribed }) {
+                CircleAndText("Subscribed")
+            }
+        }
     ) {
 
             subscriptions.forEach { sub ->

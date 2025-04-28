@@ -107,6 +107,7 @@ class ConnectionViewModel {
                 _connectionStatus.value = ConnectionStatus.CONNECTING.label
                 StompService.connect(_connectionConfig.value)
                 _connectionConfig.update { it.copy(isConnected = true) }
+
                 _connectionStatus.value = ConnectionStatus.CONNECTED.label
             } catch (e: Exception) {
                 _connectionStatus.value = "Error: ${e.message}"
@@ -122,6 +123,7 @@ class ConnectionViewModel {
                 _subs.value = _subs.value.map {
                     it.copy(isSubscribed = false)
                 }
+                _connectionConfig.update { it.copy(isConnected = false) }
                 _connectionStatus.value = ConnectionStatus.DISCONNECTED.label
             } catch (e: Exception) {
                 _connectionStatus.value = "Error: ${e.message}"

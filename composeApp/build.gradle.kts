@@ -9,10 +9,10 @@ plugins {
 
 kotlin {
     jvm("desktop")
-    
+
     sourceSets {
         val desktopMain by getting
-        
+
         commonMain.dependencies {
             implementation(compose.runtime)
             implementation(compose.foundation)
@@ -23,12 +23,12 @@ kotlin {
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.runtime.compose)
             implementation(projects.shared)
-
         }
+
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
-//            implementation("org.jetbrains.compose.ui:ui-desktop:1.7.3")
             implementation(libs.kotlinx.coroutines.swing)
+            implementation("org.jetbrains.kotlin:kotlin-stdlib:1.9.22")
             implementation("org.jetbrains.compose.ui:ui-tooling-preview-desktop:1.7.3")
 
             implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
@@ -40,6 +40,7 @@ kotlin {
             implementation("io.ktor:ktor-websockets:2.3.4")
             implementation("ch.qos.logback:logback-classic:1.2.3")
         }
+
     }
 }
 
@@ -64,7 +65,7 @@ compose.desktop {
         nativeDistributions {
             targetFormats(TargetFormat.Exe)
             packageName = "stomptc"
-            packageVersion = "0.0.1"
+            packageVersion = "0.0.4"
 
 
             windows {

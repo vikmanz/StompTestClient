@@ -1,73 +1,77 @@
 {
-  "config": {
-    "endpoint": "ws://localhost:8080/api/v1/ws",
-    "headers": [
-      {
-        "key": "Authorization",
-        "value": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ1c2VyTGV2ZWwzYSIsImV4cCI6MTc0NTg2NzE1Mn0.hTBOcyOmUwZbxo5VwrsmvXWE0tmaK2VfhRJf2t2ZFdlihR0Q0plliUW8EpQEyB5l"
-      }
+    "config": {
+        "endpoint": "ws://localhost:8080/api/v1/ws",
+        "headers": [
+            {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ1c2VyTGV2ZWwzYSIsImV4cCI6MTc0NjQ2NzY1OCwianRpIjoiY2FiYWJjY2UtZTY4Ny00NmE5LWJmYjYtMjE2N2UyZDQzMzJhIn0.5cHgQGih0UmPGSo2X2c3IytPpTiWi6WI3eL0AIyLX9ppP3-32IwBT4HEMNhND-CJ"
+            }
+        ],
+        "isConnected": true
+    },
+    "subscriptions": [
+        {
+            "topic": "/topic/user/14",
+            "id": "d5d843da-53bf-471f-9cfa-6d3eeeb11d19"
+        }
+    ],
+    "sends": [
+        {
+            "topic": "/app/user/14",
+            "message": "{\n  \"type\": \"QUEUE_ADD\"\n}",
+            "name": "QUEUE_ADD",
+            "isMaximize": false
+        },
+        {
+            "topic": "/app/user/14",
+            "message": "{\n  \"type\": \"QUEUE_REMOVE\"\n}",
+            "name": "QUEUE_REMOVE",
+            "isMaximize": false
+        },
+        {
+            "topic": "/app/user/14",
+            "message": "{\n  \"type\": \"START\"\n}",
+            "name": "START",
+            "isMaximize": false
+        },
+        {
+            "topic": "/app/user/14",
+            "message": "{\n  \"type\": \"GAME_START_CARD_CHOOSE\",\n  \"data\": {\n    \"cardsId\": [],\n    \"isReady\": true\n  }\n}",
+            "name": "GAME_START_CARD_CHOOSE empt",
+            "isMaximize": false
+        },
+        {
+            "topic": "/app/user/14",
+            "message": "{\n  \"type\": \"GAME_START_CARD_CHOOSE\",\n  \"data\": {\n    \"cardsId\": [1, 4],\n    \"isReady\": false\n  }\n}\n",
+            "name": "GAME_START_CARD_CHOOSE",
+            "isMaximize": false
+        },
+        {
+            "topic": "/app/user/14",
+            "message": "{\n \"type\": \"ROUND_OUTCOMING_CARD\",\n  \"data\": {\n    \"cardId\": 9,\n    \"isReady\": true\n  }\n}",
+            "name": "ROUND_OUTCOMING_CARD"
+        },
+        {
+            "topic": "/app/user/14",
+            "message": "{\n  \"type\": \"ROUND_INCOMING_CARD_ANSWERS\",\n    \"data\": {\n    \"cardId\": 27\n  }\n}",
+            "name": "ROUND_INCOMING_CARD_ANSWERS"
+        },
+        {
+            "topic": "/app/user/14",
+            "message": "{\n \"type\": \"ROUND_ANSWER\",\n  \"data\": {\n    \"cardId\": 27,\n    \"answerId\": 11992,\n    \"isReady\": true\n  }\n}",
+            "name": "ROUND_ANSWER"
+        },
+        {
+            "topic": "/app/user/14",
+            "message": "{\n  \"type\": \"ROUND_RESULT_READ\"\n}",
+            "name": "ROUND_RESULT_READ",
+            "isMaximize": false
+        },
+        {
+            "topic": "/app/user/14",
+            "message": "{\n \"type\": \"GAME_EXIT\"\n}",
+            "name": "GAME_EXIT",
+            "isMaximize": false
+        }
     ]
-  },
-  "subscriptions": [
-    {
-      "topic": "/topic/user/14",
-      "id": "d5d843da-53bf-471f-9cfa-6d3eeeb11d19"
-    }
-  ],
-  "sends": [
-    {
-      "topic": "/app/user/14",
-      "message": "{\n  \"type\": \"QUEUE_ADD\"\n}",
-      "name": "QUEUE_ADD",
-      "isMaximize": false
-    },
-    {
-      "topic": "/app/user/14",
-      "message": "{\n  \"type\": \"QUEUE_REMOVE\"\n}",
-      "name": "QUEUE_REMOVE",
-      "isMaximize": false
-    },
-    {
-      "topic": "/app/user/14",
-      "message": "{\n  \"type\": \"START\"\n}",
-      "name": "START",
-      "isMaximize": false
-    },
-    {
-      "topic": "/app/user/14",
-      "message": "{\n  \"type\": \"GAME_START_CARD_CHOOSE\",\n  \"data\": {\n    \"cardsId\": [],\n    \"isReady\": true\n  }\n}",
-      "name": "GAME_START_CARD_CHOOSE empt",
-      "isMaximize": false
-    },
-    {
-      "topic": "/app/user/14",
-      "message": "{\n  \"type\": \"GAME_START_CARD_CHOOSE\",\n  \"data\": {\n    \"cardsId\": [1, 4],\n    \"isReady\": false\n  }\n}\n",
-      "name": "GAME_START_CARD_CHOOSE",
-      "isMaximize": false
-    },
-    {
-      "topic": "/app/user/14",
-      "message": "{\n \"type\": \"ROUND_OUTCOMING_CARD\",\n  \"data\": {\n    \"cardId\": 23,\n    \"isReady\": true\n  }\n}",
-      "name": "ROUND_OUTCOMING_CARD",
-      "isMaximize": false
-    },
-    {
-      "topic": "/app/user/14",
-      "message": "{\n  \"type\": \"ROUND_INCOMING_CARD_ANSWERS\",\n    \"data\": {\n    \"cardId\": 3\n  }\n}",
-      "name": "ROUND_INCOMING_CARD_ANSWERS",
-      "isMaximize": false
-    },
-    {
-      "topic": "/app/user/14",
-      "message": "{\n \"type\": \"ROUND_ANSWER\",\n  \"data\": {\n    \"cardId\": 3,\n    \"answerId\": 11992,\n    \"isReady\": true\n  }\n}",
-      "name": "ROUND_ANSWER",
-      "isMaximize": false
-    },
-    {
-      "topic": "/app/user/14",
-      "message": "{\n  \"type\": \"ROUND_RESULT_READ\"\n}",
-      "name": "ROUND_RESULT_READ",
-      "isMaximize": false
-    }
-  ]
 }

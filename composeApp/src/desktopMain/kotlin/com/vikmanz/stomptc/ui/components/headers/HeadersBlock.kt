@@ -13,7 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import com.vikmanz.stomptc.model.HeaderModel
-import com.vikmanz.stomptc.ui.components.common.CollapsibleFlatCard
+import com.vikmanz.stomptc.ui.components.common.CollapsibleCard
 import com.vikmanz.stomptc.ui.theme.COLOR_Red
 
 @Preview
@@ -32,8 +32,13 @@ fun HeadersBlock(
     onRemove: (HeaderModel) -> Unit = {},
 ) {
 
-    CollapsibleFlatCard(
-        title = "Headers"
+
+    CollapsibleCard(
+        title = "Headers",
+        initialExpanded = false,
+        border = null,
+        headerBackgroundColor = null,
+        elevation = 2,
     ) {
 
         headers.forEachIndexed { index, header ->

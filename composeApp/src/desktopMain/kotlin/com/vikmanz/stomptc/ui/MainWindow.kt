@@ -31,10 +31,6 @@ fun MainWindow(
     connectionViewModel: ConnectionViewModel = ConnectionViewModel(),
     messagesViewModel: MessagesViewModel = MessagesViewModel(),
 ) {
-
-    //todo reconect
-    //todo add scroll line for messages income
-
     val subs = connectionViewModel.subs.collectAsState()
     val incomingMessages = messagesViewModel.incomeMessages.collectAsState()
 

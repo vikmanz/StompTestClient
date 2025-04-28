@@ -21,14 +21,18 @@ fun CustomCheckbox(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ){
+
         Checkbox(
             checked = checked,
-            onCheckedChange = onCheckChange,
+            onCheckedChange = { isChecked ->
+                onCheckChange(isChecked)
+            },
             colors = CheckboxDefaults.colors(
                 checkedColor = COLOR_Green,
                 checkmarkColor = Color.Black
             )
         )
+
         Text(text)
     }
 }
