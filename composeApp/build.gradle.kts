@@ -67,7 +67,7 @@ compose.desktop {
         nativeDistributions {
             targetFormats(TargetFormat.Exe)
             packageName = "stomptc"
-            packageVersion = "0.0.5"
+            packageVersion = "0.0.6"
 
 
             windows {

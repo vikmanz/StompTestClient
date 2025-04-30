@@ -90,7 +90,7 @@ fun MessageMaxItem(
                     onValueChange = {
                         onUpdate(message.copy(topic = it))
                     },
-                    label = { Text("Topic/Destination") },
+                    label = { Text("destination/topic") },
                     modifier = Modifier.fillMaxWidth(),
                     singleLine = true
 
@@ -166,7 +166,7 @@ fun MessageMaxItem(
                             onValueChange = {
                                 onUpdate(message.copy(name = it))
                             },
-                            label = { Text("Mame") },
+                            label = { Text("Name") },
                             modifier = Modifier.weight(1f),
                             singleLine = true
                     )
