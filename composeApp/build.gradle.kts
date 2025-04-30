@@ -25,6 +25,7 @@ kotlin {
             implementation(projects.shared)
         }
 
+        val ktorVersion = "2.3.4"
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
             implementation(libs.kotlinx.coroutines.swing)
@@ -34,10 +35,11 @@ kotlin {
             implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
             implementation("org.json:json:20231013")
             implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
-            implementation("io.ktor:ktor-client-core:2.3.4")
-            implementation("io.ktor:ktor-client-cio:2.3.4")
-            implementation("io.ktor:ktor-client-websockets:2.3.4")
-            implementation("io.ktor:ktor-websockets:2.3.4")
+            implementation("io.ktor:ktor-client-core:$ktorVersion")
+            implementation("io.ktor:ktor-client-cio:$ktorVersion")
+            implementation("io.ktor:ktor-client-websockets:$ktorVersion")
+            implementation("io.ktor:ktor-client-logging:$ktorVersion")
+            implementation("io.ktor:ktor-websockets:$ktorVersion")
             implementation("ch.qos.logback:logback-classic:1.2.3")
         }
 
@@ -65,7 +67,7 @@ compose.desktop {
         nativeDistributions {
             targetFormats(TargetFormat.Exe)
             packageName = "stomptc"
-            packageVersion = "0.0.4"
+            packageVersion = "0.0.5"
 
 
             windows {

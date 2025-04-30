@@ -1,9 +1,13 @@
 import androidx.compose.runtime.MutableState
 import com.vikmanz.stomptc.model.ConnectionModel
+import com.vikmanz.stomptc.model.SendModel
 import com.vikmanz.stomptc.model.StompFrame
 import com.vikmanz.stomptc.model.StompFrameBuilder
-import com.vikmanz.stomptc.model.SendModel
 import io.ktor.client.HttpClient
+import io.ktor.client.plugins.logging.LogLevel
+import io.ktor.client.plugins.logging.Logger
+import io.ktor.client.plugins.logging.Logging
+import io.ktor.client.plugins.logging.SIMPLE
 import io.ktor.client.plugins.websocket.WebSockets
 import io.ktor.client.plugins.websocket.webSocketSession
 import io.ktor.client.request.header
@@ -45,38 +49,20 @@ object StompService {
             )
 
     suspend fun connect(config: ConnectionModel) {
-        disconnect()
+        if (session != null || client != null) {
+            disconnect()
+        }
         initValues(config)
 
         val defaultHeaders = mapOf(
-                "accept-version" to "1.2",
-                "host" to extractHost(config.endpoint)
+            "accept-version" to "1.2",
+            "host" to extractHost(config.endpoint)
         )
 
         val mergedHeaders = defaultHeaders + config.headers.associate { it.key to it.value }
 
         sendStompFrame("CONNECT", headers = mergedHeaders)
         listen()
-    }
-
-    private fun extractHost(url: String): String {
-        return try {
-            java.net.URI(url).host ?: "localhost"
-        } catch (e: Exception) {
-            "localhost"
-        }
-    }
-
-    private suspend fun initValues(config: ConnectionModel) {
-        client = HttpClient {
-            install(WebSockets)
-        }
-        session = client?.webSocketSession {
-            url(config.endpoint)
-            config.headers.forEach { (k, v) ->
-                header(k, v)
-            }
-        }
     }
 
     suspend fun disconnect() {
@@ -89,22 +75,6 @@ object StompService {
         subscriptions.clear()
         clearIncomingMessages()
     }
-
-    private suspend fun sendStompFrame(
-        command: String,
-        headers: Map<String, String> = emptyMap(),
-        body: String? = null
-    ) {
-        println("Send STOMP")
-        val frame = StompFrameBuilder.build(command) {
-            headers(headers)
-            body?.let { body(it) }
-        }
-        println("=====\nSend:\n$frame\n=====")
-        println(session)
-        session?.send(Frame.Text(frame))
-    }
-
 
     suspend fun send(message: SendModel) {
         val extraHeaders = message.headers.associate { it.key to it.value }
@@ -141,6 +111,54 @@ object StompService {
         subscriptions.remove(topic)
     }
 
+
+    fun clearIncomingMessages() {
+        _receivedMessages.update { ConcurrentLinkedQueue() }
+    }
+
+    private suspend fun initValues(config: ConnectionModel) {
+        client = HttpClient {
+            install(WebSockets)
+            install(Logging) {
+                logger = Logger.SIMPLE
+                level = LogLevel.ALL
+            }
+        }
+        session = client?.webSocketSession {
+            url(config.endpoint)
+            config.headers.forEach { (k, v) ->
+                header(k, v)
+            }
+        }
+    }
+
+    private suspend fun sendStompFrame(
+        command: String,
+        headers: Map<String, String> = emptyMap(),
+        body: String? = null
+    ) {
+        try {
+
+            val frame = StompFrameBuilder.build(command) {
+                headers(headers)
+                body?.let { body(it) }
+            }
+            println("\n=====\nSend:\n$frame\n=====\n")
+            session?.send(Frame.Text(frame))
+        } catch (e: Exception) {
+            println("❌ Error sending frame: ${e.message}")
+            e.printStackTrace()
+        }
+    }
+
+    private fun extractHost(url: String): String {
+        return try {
+            java.net.URI(url).host ?: "localhost"
+        } catch (e: Exception) {
+            "localhost"
+        }
+    }
+
     private fun handleIncomingMessage(rawMessage: String) {
         val frame = StompFrame.parse(rawMessage)
         if (frame.command == "MESSAGE") {
@@ -164,11 +182,9 @@ object StompService {
                 }
             } catch (e: Exception) {
                 println("Error receiving: ${e.message}")
+                e.printStackTrace()
             }
         }
     }
 
-    fun clearIncomingMessages() {
-        _receivedMessages.update { ConcurrentLinkedQueue() }
-    }
 }

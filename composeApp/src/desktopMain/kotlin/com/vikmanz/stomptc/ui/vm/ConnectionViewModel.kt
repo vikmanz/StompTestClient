@@ -103,15 +103,15 @@ class ConnectionViewModel {
 
     fun connect() {
         coroutineScope.launch {
+            _connectionStatus.value = ConnectionStatus.CONNECTING.label
             try {
-                _connectionStatus.value = ConnectionStatus.CONNECTING.label
                 StompService.connect(_connectionConfig.value)
-                _connectionConfig.update { it.copy(isConnected = true) }
-
-                _connectionStatus.value = ConnectionStatus.CONNECTED.label
             } catch (e: Exception) {
                 _connectionStatus.value = "Error: ${e.message}"
+                return@launch
             }
+                _connectionConfig.update { it.copy(isConnected = true) }
+                _connectionStatus.value = ConnectionStatus.CONNECTED.label
         }
     }
 
@@ -120,13 +120,14 @@ class ConnectionViewModel {
             try {
                 _connectionStatus.value = ConnectionStatus.DISCONNECTING.label
                 StompService.disconnect()
+                _connectionStatus.value = ConnectionStatus.DISCONNECTED.label
+            } catch (e: Exception) {
+                _connectionStatus.value = "Error: ${e.message}"
+            } finally {
                 _subs.value = _subs.value.map {
                     it.copy(isSubscribed = false)
                 }
                 _connectionConfig.update { it.copy(isConnected = false) }
-                _connectionStatus.value = ConnectionStatus.DISCONNECTED.label
-            } catch (e: Exception) {
-                _connectionStatus.value = "Error: ${e.message}"
             }
         }
     }

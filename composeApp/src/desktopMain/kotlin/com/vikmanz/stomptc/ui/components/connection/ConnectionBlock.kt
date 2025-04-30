@@ -13,6 +13,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -27,6 +28,7 @@ import com.vikmanz.stomptc.ui.components.common.CircleAndText
 import com.vikmanz.stomptc.ui.components.common.CollapsibleCard
 import com.vikmanz.stomptc.ui.components.headers.HeadersBlock
 import com.vikmanz.stomptc.ui.vm.ConnectionViewModel
+import kotlin.math.abs
 
 @Preview
 @Composable
@@ -45,6 +47,12 @@ fun ConnectionPanel(
     val connectionConfig by connectionViewModel.connectionConfig.collectAsState()
     val connectionStatus by connectionViewModel.connectionStatus.collectAsState()
     var expanded by remember { mutableStateOf(true) }
+
+    LaunchedEffect(connectionConfig.isConnected) {
+        if (connectionConfig.isConnected) {
+            expanded = !expanded
+        }
+    }
 
     CollapsibleCard(
         title = "Connection Settings",
@@ -119,7 +127,6 @@ fun ConnectionPanel(
                                 connectionViewModel.disconnect()
                             } else {
                                 connectionViewModel.connect()
-                                expanded = !expanded
                             }
                         },
                         colors = ButtonDefaults.buttonColors(
