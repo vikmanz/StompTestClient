@@ -4,6 +4,8 @@ import com.vikmanz.stomptc.model.SendModel
 import com.vikmanz.stomptc.model.StompFrame
 import com.vikmanz.stomptc.model.StompFrameBuilder
 import io.ktor.client.HttpClient
+import io.ktor.client.plugins.logging.ANDROID
+import io.ktor.client.plugins.logging.DEFAULT
 import io.ktor.client.plugins.logging.LogLevel
 import io.ktor.client.plugins.logging.Logger
 import io.ktor.client.plugins.logging.Logging
@@ -26,6 +28,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.ConcurrentLinkedQueue
 import kotlin.collections.set
@@ -53,16 +56,13 @@ object StompService {
             disconnect()
         }
         initValues(config)
-
+        listen()
         val defaultHeaders = mapOf(
             "accept-version" to "1.2",
             "host" to extractHost(config.endpoint)
         )
-
         val mergedHeaders = defaultHeaders + config.headers.associate { it.key to it.value }
-
         sendStompFrame("CONNECT", headers = mergedHeaders)
-        listen()
     }
 
     suspend fun disconnect() {
@@ -120,7 +120,7 @@ object StompService {
         client = HttpClient {
             install(WebSockets)
             install(Logging) {
-                logger = Logger.SIMPLE
+                logger = Logger.DEFAULT
                 level = LogLevel.ALL
             }
         }
@@ -161,7 +161,7 @@ object StompService {
 
     private fun handleIncomingMessage(rawMessage: String) {
         val frame = StompFrame.parse(rawMessage)
-        if (frame.command == "MESSAGE") {
+        if (frame.command == "MESSAGE" || frame.command == "ERROR") {
             _receivedMessages.update { queue ->
                 val newQueue = ConcurrentLinkedQueue(queue)
                 newQueue.add(frame)

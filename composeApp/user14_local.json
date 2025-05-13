@@ -4,15 +4,18 @@
         "headers": [
             {
                 "key": "Authorization",
-                "value": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ1c2VyTGV2ZWwzYSIsImV4cCI6MTc0NjQ2NzY1OCwianRpIjoiY2FiYWJjY2UtZTY4Ny00NmE5LWJmYjYtMjE2N2UyZDQzMzJhIn0.5cHgQGih0UmPGSo2X2c3IytPpTiWi6WI3eL0AIyLX9ppP3-32IwBT4HEMNhND-CJ"
+                "value": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ1c2VyTGV2ZWwzYSIsImV4cCI6MTc0NzczODIwMCwianRpIjoiN2Q0NTc5ODgtN2RjNy00MTEwLWEyMmYtZmY3ZWQ4ZjU0NmE5In0.qYSmDJ_LZN5IjE7sSIk3EB-KHi1k4Qy6F9qXtRhrQaCMmbCkGUHqBBmxII-n3634"
             }
-        ],
-        "isConnected": true
+        ]
     },
     "subscriptions": [
         {
             "topic": "/topic/user/14",
             "id": "d5d843da-53bf-471f-9cfa-6d3eeeb11d19"
+        },
+        {
+            "topic": "/topic/errors",
+            "id": "c7d3218a-e04b-4ee7-a7f7-60d695011abf"
         }
     ],
     "sends": [

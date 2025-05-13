@@ -21,6 +21,9 @@ import com.vikmanz.stomptc.ui.vm.ConnectionViewModel
 import com.vikmanz.stomptc.ui.vm.MessagesViewModel
 import kotlin.math.sign
 
+//todo якщо сервер шле ERROR то розривати з'єднання
+//todo при дісконекті не стирати повідомлення старі
+
 fun main() = application {
 
     var scale by remember { mutableStateOf(0.75f) }

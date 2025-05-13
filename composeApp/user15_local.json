@@ -4,7 +4,7 @@
         "headers": [
             {
                 "key": "Authorization",
-                "value": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ1c2VyTGV2ZWwzYiIsImV4cCI6MTc0NjQ2NzY1OCwianRpIjoiYjA0OTU0NGItODhiMS00ZDY0LTkwMDUtOWZjMDZhNDczMzY0In0.FNcIv9fWZKT0HYHA6Hn9LnJ7Ux48P9lFOJmDfEqWDmSFfjmjAAt_pfq4zUBvU-o4"
+                "value": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ1c2VyTGV2ZWwzYiIsImV4cCI6MTc0NzczODIwMSwianRpIjoiMWI4ZGRhNzktZmM1MS00ZGE1LTliNDctNDAwZWU1YTk5YjIxIn0.f2fT3PzyMxBGlRpCAYW3G7gMHZLK-1fXmMpKBkHQdnfr1e19dfTskEA7c1rbSY97"
             }
         ]
     },
